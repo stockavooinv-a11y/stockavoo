@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockavoo - Brand Moodboards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #222;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .gradient-header {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .color-palette {
+            margin-bottom: 25px;
+        }
+
+        .palette-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .color-box {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 8px;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .use-case {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .use-case-title {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .use-case-text {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .industry-tag {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stockavoo Brand Moodboards</h1>
+
+        <div class="grid">
+            <!-- Option 1: Deep Plum Elegance -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #5B2C6F 0%, #8B5A9F 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">1. Deep Plum Elegance</h2>
+                    <p class="card-description">Rich, sophisticated plum tones with warm copper accents. Perfect for a premium, trustworthy brand.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #5B2C6F;">#5B2C6F</div>
+                            <div class="color-box" style="background: #8B5A9F;">#8B5A9F</div>
+                            <div class="color-box" style="background: #B87333;">#B87333</div>
+                            <div class="color-box" style="background: #2C3E50;">#2C3E50</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Sophisticated, trustworthy, premium</div>
+                        <span class="industry-tag">Finance</span>
+                        <span class="industry-tag">Professional Services</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2: Mystic Violet & Teal -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #6B46C1 0%, #14B8A6 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">2. Mystic Violet & Teal</h2>
+                    <p class="card-description">Vibrant violet balanced with refreshing teal. Modern, energetic, and innovative.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #6B46C1;">#6B46C1</div>
+                            <div class="color-box" style="background: #8B5CF6;">#8B5CF6</div>
+                            <div class="color-box" style="background: #14B8A6;">#14B8A6</div>
+                            <div class="color-box" style="background: #1E293B;">#1E293B</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Energetic, modern, innovative, fresh</div>
+                        <span class="industry-tag">Tech Startups</span>
+                        <span class="industry-tag">Creative</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 3: Aubergine Luxury -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #4A1D66 0%, #7C3E8C 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">3. Aubergine Luxury</h2>
+                    <p class="card-description">Deep aubergine with luxurious gold accents. Ultra-premium and exclusive feel.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #4A1D66;">#4A1D66</div>
+                            <div class="color-box" style="background: #7C3E8C;">#7C3E8C</div>
+                            <div class="color-box" style="background: #D4AF37;">#D4AF37</div>
+                            <div class="color-box" style="background: #1A1A1A;">#1A1A1A</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Luxurious, exclusive, premium, elegant</div>
+                        <span class="industry-tag">High-end</span>
+                        <span class="industry-tag">Luxury Goods</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 4: Midnight Indigo & Amber -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #1E3A8A 0%, #F59E0B 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">4. Midnight Indigo & Amber</h2>
+                    <p class="card-description">Professional deep blue with warm amber highlights. Trustworthy yet approachable.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #1E3A8A;">#1E3A8A</div>
+                            <div class="color-box" style="background: #3B82F6;">#3B82F6</div>
+                            <div class="color-box" style="background: #F59E0B;">#F59E0B</div>
+                            <div class="color-box" style="background: #334155;">#334155</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Professional, reliable, warm, trustworthy</div>
+                        <span class="industry-tag">Corporate</span>
+                        <span class="industry-tag">Enterprise</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 5: Forest Emerald & Rose Gold -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #065F46 0%, #B76E79 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">5. Forest Emerald & Rose Gold</h2>
+                    <p class="card-description">Natural emerald green with elegant rose gold. Sustainable and sophisticated.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #065F46;">#065F46</div>
+                            <div class="color-box" style="background: #10B981;">#10B981</div>
+                            <div class="color-box" style="background: #B76E79;">#B76E79</div>
+                            <div class="color-box" style="background: #374151;">#374151</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Natural, sustainable, growth-oriented, balanced</div>
+                        <span class="industry-tag">Eco-friendly</span>
+                        <span class="industry-tag">Wellness</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 6: Crimson & Charcoal -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #991B1B 0%, #DC2626 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">6. Crimson & Charcoal</h2>
+                    <p class="card-description">Bold crimson red with sleek charcoal. Strong, confident, action-oriented.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #991B1B;">#991B1B</div>
+                            <div class="color-box" style="background: #DC2626;">#DC2626</div>
+                            <div class="color-box" style="background: #F97316;">#F97316</div>
+                            <div class="color-box" style="background: #18181B;">#18181B</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Bold, urgent, powerful, action-driven</div>
+                        <span class="industry-tag">Sales</span>
+                        <span class="industry-tag">Emergency Services</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 7: Ocean Blue & Coral -->
+            <div class="card">
+                <div class="gradient-header" style="background: linear-gradient(135deg, #0C4A6E 0%, #FB7185 100%);">
+                    Stockavoo
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">7. Ocean Blue & Coral</h2>
+                    <p class="card-description">Trustworthy ocean blue with vibrant coral. Professional yet energetic.</p>
+
+                    <div class="color-palette">
+                        <div class="palette-title">Primary Colors</div>
+                        <div class="colors">
+                            <div class="color-box" style="background: #0C4A6E;">#0C4A6E</div>
+                            <div class="color-box" style="background: #0EA5E9;">#0EA5E9</div>
+                            <div class="color-box" style="background: #FB7185;">#FB7185</div>
+                            <div class="color-box" style="background: #475569;">#475569</div>
+                        </div>
+                    </div>
+
+                    <div class="use-case">
+                        <div class="use-case-title">Personality</div>
+                        <div class="use-case-text">Trustworthy, energetic, friendly, balanced</div>
+                        <span class="industry-tag">Healthcare</span>
+                        <span class="industry-tag">SaaS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

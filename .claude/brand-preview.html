@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stockavoo Brand Color Options - Visual Preview</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #1a202c;
+      font-size: 36px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #718096;
+      font-size: 18px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .option-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .option-header {
+      padding: 30px;
+      color: white;
+      text-align: center;
+    }
+
+    .option-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .option-tagline {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .option-body {
+      padding: 30px;
+    }
+
+    .color-swatches {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      border: 2px solid #e2e8f0;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .swatch:hover {
+      transform: scale(1.1);
+    }
+
+    .swatch::after {
+      content: attr(data-color);
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #718096;
+      white-space: nowrap;
+    }
+
+    .component-preview {
+      margin-bottom: 20px;
+    }
+
+    .preview-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #718096;
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .card-example {
+      background: #f7fafc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card-text {
+      color: #718096;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .email-preview {
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .email-header {
+      padding: 30px;
+      color: white;
+      text-align: center;
+    }
+
+    .email-body {
+      padding: 30px;
+      background: white;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* Option 1: Deep Plum */
+    .option1-header {
+      background: linear-gradient(135deg, #5B2C6F 0%, #8E4EC6 100%);
+    }
+
+    .option1-btn-primary {
+      background: linear-gradient(135deg, #5B2C6F 0%, #8E4EC6 100%);
+      color: white;
+    }
+
+    .option1-btn-secondary {
+      background: #F6B352;
+      color: #1a202c;
+    }
+
+    .option1-card .card-title {
+      color: #5B2C6F;
+    }
+
+    .option1-badge-primary {
+      background: linear-gradient(135deg, #5B2C6F 0%, #8E4EC6 100%);
+      color: white;
+    }
+
+    .option1-badge-accent {
+      background: #F6B352;
+      color: #1a202c;
+    }
+
+    /* Option 2: Mystic Violet */
+    .option2-header {
+      background: linear-gradient(135deg, #6B46C1 0%, #38B2AC 100%);
+    }
+
+    .option2-btn-primary {
+      background: linear-gradient(135deg, #6B46C1 0%, #9F7AEA 100%);
+      color: white;
+    }
+
+    .option2-btn-secondary {
+      background: #38B2AC;
+      color: white;
+    }
+
+    .option2-card .card-title {
+      color: #6B46C1;
+    }
+
+    .option2-badge-primary {
+      background: linear-gradient(135deg, #6B46C1 0%, #9F7AEA 100%);
+      color: white;
+    }
+
+    .option2-badge-accent {
+      background: #38B2AC;
+      color: white;
+    }
+
+    /* Option 3: Aubergine */
+    .option3-header {
+      background: linear-gradient(135deg, #4A1D66 0%, #7C3AED 100%);
+    }
+
+    .option3-btn-primary {
+      background: linear-gradient(135deg, #4A1D66 0%, #7C3AED 100%);
+      color: white;
+    }
+
+    .option3-btn-secondary {
+      background: #D4A574;
+      color: #1a202c;
+    }
+
+    .option3-card .card-title {
+      color: #4A1D66;
+    }
+
+    .option3-badge-primary {
+      background: linear-gradient(135deg, #4A1D66 0%, #7C3AED 100%);
+      color: white;
+    }
+
+    .option3-badge-accent {
+      background: #D4A574;
+      color: #1a202c;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #718096;
+      font-size: 14px;
+    }
+
+    .comparison-note {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border-left: 4px solid #4299E1;
+    }
+
+    .comparison-note h2 {
+      color: #2D3748;
+      margin-bottom: 15px;
+    }
+
+    .comparison-note p {
+      color: #718096;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Stockavoo Brand Colors</h1>
+    <p class="subtitle">Choose your favorite color scheme - Click and explore each option!</p>
+
+    <div class="comparison-note">
+      <h2>👋 How to Choose:</h2>
+      <p><strong>Look at:</strong> Which colors feel right for your inventory management system?</p>
+      <p><strong>Consider:</strong> Will your customers be small businesses, enterprises, or both?</p>
+      <p><strong>Test:</strong> Imagine your dashboard, emails, and marketing materials in these colors.</p>
+      <p><strong>Trust your gut:</strong> Which option makes you excited? That's probably the one! 😊</p>
+    </div>
+
+    <div class="options-grid">
+
+      <!-- OPTION 1: Deep Plum -->
+      <div class="option-card">
+        <div class="option-header option1-header">
+          <div class="option-title">Option 1</div>
+          <div class="option-tagline">Deep Plum Elegance 🍇</div>
+        </div>
+        <div class="option-body">
+          <div class="preview-label">Color Swatches</div>
+          <div class="color-swatches">
+            <div class="swatch" style="background: #5B2C6F;" data-color="#5B2C6F"></div>
+            <div class="swatch" style="background: #8E4EC6;" data-color="#8E4EC6"></div>
+            <div class="swatch" style="background: #F6B352;" data-color="#F6B352"></div>
+            <div class="swatch" style="background: #48BB78;" data-color="#48BB78"></div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Buttons</div>
+            <button class="btn option1-btn-primary">Primary Action</button>
+            <button class="btn option1-btn-secondary">Secondary</button>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Dashboard Card</div>
+            <div class="card-example option1-card">
+              <div class="card-title">Total Inventory</div>
+              <div class="card-text">Track your stock levels across all locations with real-time updates.</div>
+            </div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Badges</div>
+            <span class="badge option1-badge-primary">Premium</span>
+            <span class="badge option1-badge-accent">New</span>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Email Header Preview</div>
+            <div class="email-preview">
+              <div class="email-header option1-header">
+                <h2 style="margin: 0; font-size: 28px;">Stockavoo</h2>
+                <p style="margin-top: 8px; opacity: 0.9;">Inventory Management</p>
+              </div>
+              <div class="email-body">
+                <p style="color: #5B2C6F; font-weight: 600; margin-bottom: 10px;">Welcome back!</p>
+                <p style="color: #718096;">Your inventory levels are looking good this month.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
+            <p style="font-size: 14px; color: #718096; line-height: 1.6;">
+              <strong style="color: #2D3748;">Best for:</strong> Professional businesses seeking a sophisticated, enterprise-ready look. Combines trust with approachability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 2: Mystic Violet & Teal -->
+      <div class="option-card">
+        <div class="option-header option2-header">
+          <div class="option-title">Option 2</div>
+          <div class="option-tagline">Mystic Violet & Teal ✨</div>
+        </div>
+        <div class="option-body">
+          <div class="preview-label">Color Swatches</div>
+          <div class="color-swatches">
+            <div class="swatch" style="background: #6B46C1;" data-color="#6B46C1"></div>
+            <div class="swatch" style="background: #9F7AEA;" data-color="#9F7AEA"></div>
+            <div class="swatch" style="background: #38B2AC;" data-color="#38B2AC"></div>
+            <div class="swatch" style="background: #48BB78;" data-color="#48BB78"></div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Buttons</div>
+            <button class="btn option2-btn-primary">Primary Action</button>
+            <button class="btn option2-btn-secondary">Secondary</button>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Dashboard Card</div>
+            <div class="card-example option2-card">
+              <div class="card-title">Total Inventory</div>
+              <div class="card-text">Track your stock levels across all locations with real-time updates.</div>
+            </div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Badges</div>
+            <span class="badge option2-badge-primary">Premium</span>
+            <span class="badge option2-badge-accent">New</span>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Email Header Preview</div>
+            <div class="email-preview">
+              <div class="email-header option2-header">
+                <h2 style="margin: 0; font-size: 28px;">Stockavoo</h2>
+                <p style="margin-top: 8px; opacity: 0.9;">Inventory Management</p>
+              </div>
+              <div class="email-body">
+                <p style="color: #6B46C1; font-weight: 600; margin-bottom: 10px;">Welcome back!</p>
+                <p style="color: #718096;">Your inventory levels are looking good this month.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
+            <p style="font-size: 14px; color: #718096; line-height: 1.6;">
+              <strong style="color: #2D3748;">Best for:</strong> Modern, innovative startups. The purple-teal combination creates fresh energy and tech-forward vibes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 3: Aubergine Luxury -->
+      <div class="option-card">
+        <div class="option-header option3-header">
+          <div class="option-title">Option 3</div>
+          <div class="option-tagline">Aubergine Luxury 👑</div>
+        </div>
+        <div class="option-body">
+          <div class="preview-label">Color Swatches</div>
+          <div class="color-swatches">
+            <div class="swatch" style="background: #4A1D66;" data-color="#4A1D66"></div>
+            <div class="swatch" style="background: #7C3AED;" data-color="#7C3AED"></div>
+            <div class="swatch" style="background: #D4A574;" data-color="#D4A574"></div>
+            <div class="swatch" style="background: #68D391;" data-color="#68D391"></div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Buttons</div>
+            <button class="btn option3-btn-primary">Primary Action</button>
+            <button class="btn option3-btn-secondary">Secondary</button>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Dashboard Card</div>
+            <div class="card-example option3-card">
+              <div class="card-title">Total Inventory</div>
+              <div class="card-text">Track your stock levels across all locations with real-time updates.</div>
+            </div>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Badges</div>
+            <span class="badge option3-badge-primary">Premium</span>
+            <span class="badge option3-badge-accent">New</span>
+          </div>
+
+          <div class="component-preview">
+            <div class="preview-label">Email Header Preview</div>
+            <div class="email-preview">
+              <div class="email-header option3-header">
+                <h2 style="margin: 0; font-size: 28px;">Stockavoo</h2>
+                <p style="margin-top: 8px; opacity: 0.9;">Inventory Management</p>
+              </div>
+              <div class="email-body">
+                <p style="color: #4A1D66; font-weight: 600; margin-bottom: 10px;">Welcome back!</p>
+                <p style="color: #718096;">Your inventory levels are looking good this month.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e2e8f0;">
+            <p style="font-size: 14px; color: #718096; line-height: 1.6;">
+              <strong style="color: #2D3748;">Best for:</strong> Premium, high-end B2B. The deepest purple with gold accents creates an exclusive, powerful brand presence.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <p>🎨 Created with Claude Code for Stockavoo</p>
+      <p style="margin-top: 10px;">Take your time - the right colors will make Stockavoo stand out!</p>
+    </div>
+  </div>
+
+  <script>
+    // Add click feedback to swatches
+    document.querySelectorAll('.swatch').forEach(swatch => {
+      swatch.addEventListener('click', function() {
+        const color = this.getAttribute('data-color');
+        navigator.clipboard.writeText(color);
+
+        const originalTransform = this.style.transform;
+        this.style.transform = 'scale(1.2)';
+        this.style.border = '3px solid #48BB78';
+
+        setTimeout(() => {
+          this.style.transform = originalTransform;
+          this.style.border = '2px solid #e2e8f0';
+        }, 300);
+
+        // Show copied notification
+        const notification = document.createElement('div');
+        notification.textContent = `Copied ${color}!`;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #48BB78;
+          color: white;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-weight: 600;
+          z-index: 1000;
+          animation: slideIn 0.3s ease;
+        `;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 2000);
+      });
+    });
+
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
