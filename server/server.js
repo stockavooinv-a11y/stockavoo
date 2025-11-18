@@ -1,12 +1,14 @@
 // Import dependencies
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './src/config/database.js';
-import { verifyEmailConfig } from './src/config/email.js';
+import express from "express";
+import cors from "cors";
+import session from "express-session";
+import dotenv from "dotenv";
+import connectDB from "./src/config/database.js";
+import { verifyEmailConfig } from "./src/config/email.js";
+import passport from "./src/config/passport.js";
 
 // Import routes
-import authRoutes from './src/routes/authRoutes.js';
+import authRoutes from "./src/routes/authRoutes.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -36,28 +38,41 @@ app.use(express.json());
 // 3. URL Encoded Parser - Handles form data
 app.use(express.urlencoded({ extended: true }));
 
+// 4. Session middleware for OAuth state management
+app.use(session({
+  secret: process.env.JWT_SECRET || 'your-session-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
+// 5. Initialize Passport for OAuth
+app.use(passport.initialize());
+app.use(passport.session());
+
 // ============ ROUTES ============
 // Define API endpoints here
 
 // Health check route - useful to verify server is running
-app.get('/api/health', (req, res) => {
+app.get("/api/health", (req, res) => {
   res.status(200).json({
-    status: 'success',
-    message: 'Stockavoo API is running!',
-    timestamp: new Date().toISOString()
+    status: "success",
+    message: "Stockavoo API is running!",
+    timestamp: new Date().toISOString(),
   });
 });
 
 // Mount authentication routes
 // All routes in authRoutes will be prefixed with /api/auth
 // Example: POST /api/auth/register, POST /api/auth/login
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 
 // Test route to understand request/response
-app.get('/api/test', (req, res) => {
+app.get("/api/test", (req, res) => {
   res.status(200).json({
-    message: 'This is a test endpoint',
-    explanation: 'When you visit this URL, this JSON is sent back to the client'
+    message: "This is a test endpoint",
+    explanation:
+      "When you visit this URL, this JSON is sent back to the client",
   });
 });
 
@@ -65,18 +80,18 @@ app.get('/api/test', (req, res) => {
 // In Express 5, we use a middleware without a path to catch all unmatched routes
 app.use((req, res) => {
   res.status(404).json({
-    status: 'error',
-    message: `Cannot find ${req.originalUrl} on this server!`
+    status: "error",
+    message: `Cannot find ${req.originalUrl} on this server!`,
   });
 });
 
 // ============ ERROR HANDLING ============
 // Global error handler - catches any errors in the app
 app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
+  console.error("Error:", err.stack);
   res.status(err.status || 500).json({
-    status: 'error',
-    message: err.message || 'Something went wrong!'
+    status: "error",
+    message: err.message || "Something went wrong!",
   });
 });
 
@@ -86,7 +101,7 @@ app.listen(PORT, () => {
 ╔════════════════════════════════════════╗
 ║   Stockavoo API Server Running        ║
 ║   Port: ${PORT}                           ║
-║   Environment: ${process.env.NODE_ENV || 'development'}              ║
+║   Environment: ${process.env.NODE_ENV || "development"}              ║
 ║   URL: http://localhost:${PORT}           ║
 ╚════════════════════════════════════════╝
   `);

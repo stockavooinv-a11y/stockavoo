@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
+import OAuthCallback from './pages/auth/OAuthCallback';
 import Dashboard from './pages/dashboard/Dashboard';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import "./App.css";
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/auth/callback" element={<OAuthCallback />} />
       <Route
         path="/dashboard"
         element={
