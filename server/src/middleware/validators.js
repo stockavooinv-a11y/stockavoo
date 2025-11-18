@@ -133,6 +133,42 @@ export const validateEmail = [
 ];
 
 /**
+ * Password reset request validation
+ */
+export const validateForgotPassword = [
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Please provide a valid email address')
+    .normalizeEmail(),
+
+  handleValidationErrors
+];
+
+/**
+ * Password reset validation
+ */
+export const validateResetPassword = [
+  // Password validation
+  passwordValidation,
+
+  // Confirm Password validation
+  body('confirmPassword')
+    .notEmpty()
+    .withMessage('Please confirm your password')
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Passwords do not match');
+      }
+      return true;
+    }),
+
+  handleValidationErrors
+];
+
+/**
  * Middleware to handle validation errors
  * This runs after validation rules and checks if any errors occurred
  */

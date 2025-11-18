@@ -6,13 +6,17 @@ import {
   resendVerification,
   getMe,
   googleCallback,
-  facebookCallback
+  facebookCallback,
+  forgotPassword,
+  resetPassword
 } from '../controllers/authController.js';
 import { protect } from '../middleware/auth.js';
 import {
   validateRegistration,
   validateLogin,
-  validateEmail
+  validateEmail,
+  validateForgotPassword,
+  validateResetPassword
 } from '../middleware/validators.js';
 import passport from '../config/passport.js';
 
@@ -89,6 +93,31 @@ router.get('/verify-email/:token', verifyEmail);
  * }
  */
 router.post('/resend-verification', validateEmail, resendVerification);
+
+/**
+ * @route   POST /api/auth/forgot-password
+ * @desc    Request password reset link
+ * @access  Public
+ *
+ * Expected request body:
+ * {
+ *   "email": "john@example.com"
+ * }
+ */
+router.post('/forgot-password', validateForgotPassword, forgotPassword);
+
+/**
+ * @route   POST /api/auth/reset-password/:token
+ * @desc    Reset password with token
+ * @access  Public
+ *
+ * Expected request body:
+ * {
+ *   "password": "NewPassword123!",
+ *   "confirmPassword": "NewPassword123!"
+ * }
+ */
+router.post('/reset-password/:token', validateResetPassword, resetPassword);
 
 /**
  * @route   GET /api/auth/google

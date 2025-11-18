@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import { generateToken } from '../utils/jwt.js';
-import { sendVerificationEmail, sendWelcomeEmail } from '../utils/emailHelpers.js';
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '../utils/emailHelpers.js';
 import crypto from 'crypto';
 
 /**
@@ -349,6 +349,129 @@ export const facebookCallback = async (req, res) => {
   } catch (error) {
     console.error('Facebook OAuth callback error:', error);
     res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
+  }
+};
+
+/**
+ * @desc    Request password reset
+ * @route   POST /api/auth/forgot-password
+ * @access  Public
+ */
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Find user by email
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    // Don't reveal if user exists or not (security best practice)
+    if (!user) {
+      return res.status(200).json({
+        status: 'success',
+        message: 'If an account with that email exists, a password reset link has been sent.'
+      });
+    }
+
+    // Don't allow password reset for OAuth users
+    if (user.authProvider !== 'local') {
+      return res.status(400).json({
+        status: 'error',
+        message: `This account uses ${user.authProvider} authentication. Please login with ${user.authProvider}.`
+      });
+    }
+
+    // Generate password reset token
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+
+    // Send password reset email
+    await sendPasswordResetEmail(user, resetToken);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'If an account with that email exists, a password reset link has been sent.'
+    });
+
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong. Please try again later.'
+    });
+  }
+};
+
+/**
+ * @desc    Reset password with token
+ * @route   POST /api/auth/reset-password/:token
+ * @access  Public
+ */
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // Hash the token to compare with database
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    // Find user with valid token
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() } // Token must not be expired
+    });
+
+    // Check if token is valid
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'This link has expired or is invalid. Please request a new password reset.'
+      });
+    }
+
+    // Update password and clear reset token fields
+    user.password = password; // Will be hashed by mongoose middleware
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // Generate new JWT token for immediate login
+    const jwtToken = generateToken(user._id);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password reset successful! You can now login with your new password.',
+      data: {
+        user: {
+          id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+          isVerified: user.isVerified
+        },
+        token: jwtToken
+      }
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
+
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        status: 'error',
+        message: 'Validation failed',
+        errors
+      });
+    }
+
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong. Please try again later.'
+    });
   }
 };
 
