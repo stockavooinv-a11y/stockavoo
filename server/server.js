@@ -1,11 +1,9 @@
 // Import dependencies
 import express from "express";
 import cors from "cors";
-import session from "express-session";
 import dotenv from "dotenv";
 import connectDB from "./src/config/database.js";
 import { verifyEmailConfig } from "./src/config/email.js";
-import passport from "./src/config/passport.js";
 
 // Import routes
 import authRoutes from "./src/routes/authRoutes.js";
@@ -37,18 +35,6 @@ app.use(express.json());
 
 // 3. URL Encoded Parser - Handles form data
 app.use(express.urlencoded({ extended: true }));
-
-// 4. Session middleware for OAuth state management
-app.use(session({
-  secret: process.env.JWT_SECRET || 'your-session-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
-}));
-
-// 5. Initialize Passport for OAuth
-app.use(passport.initialize());
-app.use(passport.session());
 
 // ============ ROUTES ============
 // Define API endpoints here

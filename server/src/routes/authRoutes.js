@@ -5,8 +5,6 @@ import {
   verifyEmail,
   resendVerification,
   getMe,
-  googleCallback,
-  facebookCallback,
   forgotPassword,
   resetPassword
 } from '../controllers/authController.js';
@@ -18,7 +16,6 @@ import {
   validateForgotPassword,
   validateResetPassword
 } from '../middleware/validators.js';
-import passport from '../config/passport.js';
 
 /**
  * AUTHENTICATION ROUTES
@@ -118,34 +115,6 @@ router.post('/forgot-password', validateForgotPassword, forgotPassword);
  * }
  */
 router.post('/reset-password/:token', validateResetPassword, resetPassword);
-
-/**
- * @route   GET /api/auth/google
- * @desc    Initiate Google OAuth flow
- * @access  Public
- */
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-/**
- * @route   GET /api/auth/google/callback
- * @desc    Google OAuth callback
- * @access  Public
- */
-router.get('/google/callback', passport.authenticate('google', { session: false, failureRedirect: `${process.env.CLIENT_URL}/login?error=oauth_failed` }), googleCallback);
-
-/**
- * @route   GET /api/auth/facebook
- * @desc    Initiate Facebook OAuth flow
- * @access  Public
- */
-router.get('/facebook', passport.authenticate('facebook', { scope: ['public_profile'] }));
-
-/**
- * @route   GET /api/auth/facebook/callback
- * @desc    Facebook OAuth callback
- * @access  Public
- */
-router.get('/facebook/callback', passport.authenticate('facebook', { session: false, failureRedirect: `${process.env.CLIENT_URL}/login?error=oauth_failed` }), facebookCallback);
 
 // ============ PROTECTED ROUTES (authentication required) ============
 

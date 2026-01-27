@@ -307,52 +307,6 @@ export const getMe = async (req, res) => {
 };
 
 /**
- * @desc    Google OAuth callback handler
- * @route   GET /api/auth/google/callback
- * @access  Public
- */
-export const googleCallback = async (req, res) => {
-  try {
-    // User is attached to req by passport after successful authentication
-    const user = req.user;
-
-    // Generate JWT token
-    const token = generateToken(user._id);
-
-    // Redirect to frontend with token in URL
-    // Frontend will extract token and store it
-    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
-
-  } catch (error) {
-    console.error('Google OAuth callback error:', error);
-    res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
-  }
-};
-
-/**
- * @desc    Facebook OAuth callback handler
- * @route   GET /api/auth/facebook/callback
- * @access  Public
- */
-export const facebookCallback = async (req, res) => {
-  try {
-    // User is attached to req by passport after successful authentication
-    const user = req.user;
-
-    // Generate JWT token
-    const token = generateToken(user._id);
-
-    // Redirect to frontend with token in URL
-    // Frontend will extract token and store it
-    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
-
-  } catch (error) {
-    console.error('Facebook OAuth callback error:', error);
-    res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
-  }
-};
-
-/**
  * @desc    Request password reset
  * @route   POST /api/auth/forgot-password
  * @access  Public
@@ -369,14 +323,6 @@ export const forgotPassword = async (req, res) => {
       return res.status(200).json({
         status: 'success',
         message: 'If an account with that email exists, a password reset link has been sent.'
-      });
-    }
-
-    // Don't allow password reset for OAuth users
-    if (user.authProvider !== 'local') {
-      return res.status(400).json({
-        status: 'error',
-        message: `This account uses ${user.authProvider} authentication. Please login with ${user.authProvider}.`
       });
     }
 

@@ -36,18 +36,13 @@ const userSchema = new mongoose.Schema(
       validate: [validator.isEmail, 'Please provide a valid email']
     },
 
-    // Phone number - optional for OAuth users
+    // Phone number
     phoneNumber: {
       type: String,
-      required: function() {
-        // Only required for local auth (email/password registration)
-        return this.authProvider === 'local';
-      },
+      required: [true, 'Please provide your phone number'],
       trim: true,
       validate: {
         validator: function(v) {
-          // Skip validation if no phone number provided (OAuth users)
-          if (!v) return true;
           // Basic phone validation - adjust regex based on your needs
           return /^[+]?[\d\s()-]{10,}$/.test(v);
         },
@@ -55,13 +50,10 @@ const userSchema = new mongoose.Schema(
       }
     },
 
-    // Password - will be hashed before saving (optional for OAuth users)
+    // Password - will be hashed before saving
     password: {
       type: String,
-      required: function() {
-        // Only required for local auth (email/password registration)
-        return this.authProvider === 'local';
-      },
+      required: [true, 'Please provide a password'],
       minlength: [8, 'Password must be at least 8 characters long'],
       select: false // This field won't be returned in queries by default (security)
     },
@@ -73,13 +65,10 @@ const userSchema = new mongoose.Schema(
       default: 'owner'
     },
 
-    // Account verification status - OAuth users are auto-verified
+    // Account verification status
     isVerified: {
       type: Boolean,
-      default: function() {
-        // OAuth users are automatically verified (Google already verified their email)
-        return this.authProvider !== 'local';
-      }
+      default: false
     },
 
     // Email verification token (sent to user's email)
@@ -90,17 +79,7 @@ const userSchema = new mongoose.Schema(
     passwordResetToken: String,
     passwordResetExpires: Date,
 
-    // OAuth providers (Google, Facebook)
-    authProvider: {
-      type: String,
-      enum: ['local', 'google', 'facebook'],
-      default: 'local'
-    },
-
-    // OAuth provider ID (if user registered via OAuth)
-    authProviderId: String,
-
-    // Profile picture URL (from OAuth or user upload)
+    // Profile picture URL (user upload)
     profilePicture: String,
 
     // Account status
@@ -109,20 +88,12 @@ const userSchema = new mongoose.Schema(
       default: true
     },
 
-    // Terms and conditions acceptance - required for local auth, auto-true for OAuth
+    // Terms and conditions acceptance
     agreedToTerms: {
       type: Boolean,
-      required: function() {
-        return this.authProvider === 'local';
-      },
-      default: function() {
-        // Auto-accept terms for OAuth users
-        return this.authProvider !== 'local';
-      },
+      required: [true, 'You must agree to the terms and conditions'],
       validate: {
         validator: function(v) {
-          // OAuth users automatically accept terms
-          if (this.authProvider !== 'local') return true;
           return v === true;
         },
         message: 'You must agree to the terms and conditions'

@@ -3,7 +3,6 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
-import OAuthCallback from './pages/auth/OAuthCallback';
 import Dashboard from './pages/dashboard/Dashboard';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import "./App.css";
@@ -16,7 +15,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/auth/callback" element={<OAuthCallback />} />
       <Route
         path="/dashboard"
         element={
