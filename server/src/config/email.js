@@ -42,14 +42,18 @@ const createTransporter = () => {
       }
     });
   } else if (process.env.EMAIL_SERVICE === 'smtp') {
-    // Generic SMTP Configuration (SendGrid, Mailgun, etc.)
+    // Generic SMTP Configuration (Brevo, SendGrid, Mailgun, etc.)
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT || 587,
-      secure: process.env.EMAIL_PORT === '465', // true for 465, false for other ports
+      port: parseInt(process.env.EMAIL_PORT) || 587,
+      secure: false, // Use STARTTLS for port 587
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD
+      },
+      tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false
       }
     });
   } else {
