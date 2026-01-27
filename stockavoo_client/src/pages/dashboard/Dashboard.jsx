@@ -1,15 +1,27 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectCurrentUser } from '../../store/slices/authSlice';
+import { ConfirmationModal } from '../../components/common';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
+  };
+
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleConfirmLogout = () => {
+    setShowLogoutModal(false);
+    handleLogout();
   };
 
   return (
@@ -25,7 +37,7 @@ const Dashboard = () => {
               )}
             </div>
             <button
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
               className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
             >
               Logout
@@ -84,6 +96,23 @@ const Dashboard = () => {
           </div>
         </div>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={handleConfirmLogout}
+        title="Logout"
+        message="Are you sure you want to logout? You will need to login again to access your account."
+        confirmText="Yes, Logout"
+        cancelText="Cancel"
+        confirmVariant="danger"
+        icon={
+          <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        }
+      />
     </div>
   );
 };

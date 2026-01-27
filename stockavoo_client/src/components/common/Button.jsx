@@ -8,7 +8,7 @@ const Button = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = 'font-medium rounded-md transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'font-medium rounded-md transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer';
 
   const variants = {
     primary: 'bg-gradient-to-r from-[#4A1D66] to-[#7C3E8C] text-white hover:opacity-90 focus:ring-[#7C3E8C]',
