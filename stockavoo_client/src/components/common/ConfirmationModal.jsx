@@ -24,7 +24,7 @@ const ConfirmationModal = ({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop with blur */}
       <div
-        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm transition-all duration-300"
+        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm transition-all duration-300 cursor-pointer"
         onClick={onClose}
       ></div>
 
@@ -35,7 +35,7 @@ const ConfirmationModal = ({
           <button
             onClick={onClose}
             disabled={isLoading}
-            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -64,7 +64,6 @@ const ConfirmationModal = ({
               onClick={onClose}
               fullWidth
               disabled={isLoading}
-              className="hover:bg-slate-50"
             >
               {cancelText}
             </Button>

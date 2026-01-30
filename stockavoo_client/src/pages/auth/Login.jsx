@@ -259,11 +259,11 @@ const Login = () => {
             {/* Footer Note */}
             <p className="mt-6 text-center text-xs text-slate-500">
               By signing in, you agree to our{" "}
-              <a href="#" className="text-[#7C3E8C] hover:underline">
+              <a href="#" className="text-[#7C3E8C] hover:underline cursor-pointer">
                 Terms
               </a>{" "}
               and{" "}
-              <a href="#" className="text-[#7C3E8C] hover:underline">
+              <a href="#" className="text-[#7C3E8C] hover:underline cursor-pointer">
                 Privacy Policy
               </a>
             </p>

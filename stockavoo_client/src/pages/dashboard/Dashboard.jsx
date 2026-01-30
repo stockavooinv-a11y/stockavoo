@@ -63,7 +63,7 @@ const Dashboard = () => {
               </div>
               <span className="text-xl font-bold text-white">Stockavoo</span>
             </div>
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white">
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white/70 hover:text-white cursor-pointer">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -76,7 +76,7 @@ const Dashboard = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                     item.current
                       ? 'bg-white/10 text-white shadow-lg'
                       : 'text-white/70 hover:bg-white/5 hover:text-white'
@@ -102,7 +102,7 @@ const Dashboard = () => {
             </div>
             <button
               onClick={handleLogoutClick}
-              className="w-full mt-2 flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition-all"
+              className="w-full mt-2 flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition-all cursor-pointer"
             >
               <LogOut className="w-5 h-5" />
               Logout
@@ -120,7 +120,7 @@ const Dashboard = () => {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+                  className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 cursor-pointer"
                 >
                   <Menu className="w-6 h-6" />
                 </button>
@@ -242,7 +242,7 @@ const StatCard = ({ title, value, change, trend, icon: Icon, color }) => {
 // Action Button Component
 const ActionButton = ({ icon: Icon, label }) => {
   return (
-    <button className="group flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-xl hover:border-[#7C3E8C] hover:shadow-lg hover:shadow-[#7C3E8C]/10 transition-all duration-300">
+    <button className="group flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-xl hover:border-[#7C3E8C] hover:shadow-lg hover:shadow-[#7C3E8C]/10 transition-all duration-300 cursor-pointer">
       <Icon className="w-5 h-5 text-slate-600 group-hover:text-[#7C3E8C] transition-colors" />
       <span className="font-medium text-slate-700 group-hover:text-slate-900">{label}</span>
     </button>
