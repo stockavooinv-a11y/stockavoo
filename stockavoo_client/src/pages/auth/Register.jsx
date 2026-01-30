@@ -55,9 +55,9 @@ const Register = () => {
 
       setSuccess(true);
 
-      // Redirect to dashboard after 2 seconds
+      // Redirect to verification waiting page after 2 seconds
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/verify-email-waiting');
       }, 2000);
     } catch (err) {
       console.log('Error caught:', err);
@@ -98,7 +98,7 @@ const Register = () => {
             <div className="w-2 h-2 bg-[#7C3E8C] rounded-full animate-bounce"></div>
             <div className="w-2 h-2 bg-[#7C3E8C] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
             <div className="w-2 h-2 bg-[#7C3E8C] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-            <p className="ml-2">Redirecting to dashboard...</p>
+            <p className="ml-2">Redirecting to verification page...</p>
           </div>
         </div>
       </div>

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useVerifyEmailMutation } from '../../store/api/authApi';
+import { selectCurrentUser, setCredentials } from '../../store/slices/authSlice';
 
 const VerifyEmail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
   const [status, setStatus] = useState('verifying'); // 'verifying', 'success', 'error'
   const [message, setMessage] = useState('');
@@ -22,10 +26,25 @@ const VerifyEmail = () => {
         setStatus('success');
         setMessage(result.message || 'Email verified successfully!');
 
-        // Redirect to login after 3 seconds
-        setTimeout(() => {
-          navigate('/login');
-        }, 3000);
+        // If user is logged in, update their verification status and redirect to dashboard
+        if (currentUser) {
+          dispatch(
+            setCredentials({
+              user: { ...currentUser, isVerified: true },
+              token: localStorage.getItem('token'),
+            })
+          );
+
+          // Redirect to dashboard after 2 seconds
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 2000);
+        } else {
+          // Redirect to login after 3 seconds
+          setTimeout(() => {
+            navigate('/login');
+          }, 3000);
+        }
       } catch (error) {
         setStatus('error');
         setMessage(error.message || 'Verification failed. The link may be invalid or expired.');
@@ -33,7 +52,7 @@ const VerifyEmail = () => {
     };
 
     handleVerification();
-  }, [token, verifyEmail, navigate]);
+  }, [token, verifyEmail, navigate, currentUser, dispatch]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -58,7 +77,7 @@ const VerifyEmail = () => {
             </h2>
             <p className="text-gray-600 mb-4">{message}</p>
             <p className="text-sm text-gray-500">
-              Redirecting to login page...
+              {currentUser ? 'Redirecting to dashboard...' : 'Redirecting to login page...'}
             </p>
           </>
         ) : (
