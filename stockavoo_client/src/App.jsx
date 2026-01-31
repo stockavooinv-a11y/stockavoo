@@ -6,7 +6,10 @@ import ResetPassword from './pages/auth/ResetPassword';
 import VerifyEmail from './pages/auth/VerifyEmail';
 import VerificationWaiting from './pages/auth/VerificationWaiting';
 import Dashboard from './pages/dashboard/Dashboard';
+import Users from './pages/Users';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import RBACGuard from './components/RBACGuard';
+import DashboardLayout from './components/layouts/DashboardLayout';
 import "./App.css";
 
 function App() {
@@ -30,7 +33,21 @@ function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <RBACGuard roles={['owner', 'manager']}>
+                <Users />
+              </RBACGuard>
+            </DashboardLayout>
           </ProtectedRoute>
         }
       />

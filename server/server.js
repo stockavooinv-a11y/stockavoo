@@ -7,6 +7,7 @@ import { verifyEmailConfig } from "./src/config/email.js";
 
 // Import routes
 import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -52,6 +53,11 @@ app.get("/api/health", (req, res) => {
 // All routes in authRoutes will be prefixed with /api/auth
 // Example: POST /api/auth/register, POST /api/auth/login
 app.use("/api/auth", authRoutes);
+
+// Mount user management routes
+// All routes in userRoutes will be prefixed with /api/users
+// Example: GET /api/users, POST /api/users, GET /api/users/me
+app.use("/api/users", userRoutes);
 
 // Test route to understand request/response
 app.get("/api/test", (req, res) => {

@@ -61,8 +61,34 @@ const userSchema = new mongoose.Schema(
     // Role - default is 'owner' since everyone who registers is a business owner
     role: {
       type: String,
-      enum: ['owner', 'manager', 'staff'], // Only these values are allowed
+      enum: [
+        'owner',              // Store Owner - Full access
+        'manager',            // Store Manager - Product, inventory, supplier management
+        'clerk',              // Sales Clerk - POS operations, sales
+        'accountant',         // Accountant - Financial reports, expenses
+        'warehouse_manager'   // Warehouse Manager - Stock operations, transfers
+      ],
       default: 'owner'
+    },
+
+    // Business/Store association (users belong to a business)
+    businessId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Business',
+      required: false // Owner creates business after registration
+    },
+
+    // Track who created this user (for filtering users by owner)
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false // Only set for users created by an owner
+    },
+
+    // Permissions - granular control for custom access
+    permissions: {
+      type: [String],
+      default: []
     },
 
     // Account verification status
