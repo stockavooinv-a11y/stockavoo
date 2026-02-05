@@ -6,7 +6,8 @@ import {
   createUser,
   updateUser,
   deleteUser,
-  updateOwnProfile
+  updateOwnProfile,
+  changePassword
 } from '../controllers/userController.js';
 import { protect } from '../middleware/auth.js';
 import { requireRole, requirePermission, requireOwnership } from '../middleware/rbac.js';
@@ -35,6 +36,13 @@ router.get('/me', protect, getCurrentUser);
  * @access  Private (any authenticated user)
  */
 router.put('/me', protect, updateOwnProfile);
+
+/**
+ * @route   PUT /api/users/me/password
+ * @desc    Change own password
+ * @access  Private (any authenticated user)
+ */
+router.put('/me/password', protect, changePassword);
 
 // ========== OWNER/MANAGER ROUTES ==========
 

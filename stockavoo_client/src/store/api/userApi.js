@@ -70,6 +70,15 @@ export const userApi = createApi({
       invalidatesTags: ['User'],
     }),
 
+    // Change own password
+    changePassword: builder.mutation({
+      query: (passwords) => ({
+        url: '/users/me/password',
+        method: 'PUT',
+        body: passwords,
+      }),
+    }),
+
     // Delete/Deactivate user
     deleteUser: builder.mutation({
       query: (id) => ({
@@ -89,5 +98,6 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useUpdateOwnProfileMutation,
+  useChangePasswordMutation,
   useDeleteUserMutation,
 } = userApi;

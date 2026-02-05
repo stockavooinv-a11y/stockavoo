@@ -101,7 +101,10 @@ const DashboardLayout = ({ children }) => {
 
           {/* User Section */}
           <div className="px-4 py-4 border-t border-white/10">
-            <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5">
+            <Link
+              to="/profile"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all cursor-pointer"
+            >
               <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-full flex items-center justify-center text-[#2A1142] font-bold">
                 {user?.fullName?.charAt(0) || 'U'}
               </div>
@@ -109,7 +112,7 @@ const DashboardLayout = ({ children }) => {
                 <p className="text-sm font-medium text-white truncate">{user?.fullName}</p>
                 <p className="text-xs text-white/60 truncate">{user?.email}</p>
               </div>
-            </div>
+            </Link>
             <button
               onClick={handleLogoutClick}
               className="w-full mt-2 flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition-all cursor-pointer"
