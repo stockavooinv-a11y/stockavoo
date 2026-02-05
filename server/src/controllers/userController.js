@@ -134,33 +134,30 @@ export const createUser = async (req, res) => {
       });
     }
 
-    // Generate temporary password (user will be asked to change it)
-    const tempPassword = Math.random().toString(36).slice(-8) + 'A1!';
-
-    // Create new user
-    const newUser = await User.create({
+    // Create new user without password (they'll set it via token link)
+    const newUser = new User({
       fullName,
       email: email.toLowerCase(),
       phoneNumber,
-      password: tempPassword,
       role,
       businessId: req.user.businessId, // Associate with owner's business
       createdBy: req.user._id, // Track who created this user
-      isVerified: false, // User must verify email
+      isVerified: false, // User must verify email and setup password
+      isFirstLogin: true, // First time user
       agreedToTerms: true // Assumed since owner is adding them
     });
 
-    // Generate verification token
-    const verificationToken = newUser.createVerificationToken();
-    await newUser.save();
+    // Generate password setup token
+    const setupToken = newUser.createPasswordSetupToken();
+    await newUser.save({ validateBeforeSave: false });
 
-    // Send invitation email with temporary password
-    const emailContent = userInviteTemplate(fullName, email, tempPassword, verificationToken);
+    // Send account setup email
+    const emailContent = userInviteTemplate(fullName, email, setupToken);
 
     try {
       await sendEmail({
         to: email,
-        subject: 'You have been invited to SmartInventory',
+        subject: 'You have been invited to Stockavoo',
         html: emailContent
       });
     } catch (emailError) {
@@ -171,11 +168,11 @@ export const createUser = async (req, res) => {
     // Remove sensitive data before sending response
     const userResponse = newUser.toObject();
     delete userResponse.password;
-    delete userResponse.verificationToken;
+    delete userResponse.passwordSetupToken;
 
     res.status(201).json({
       success: true,
-      message: `User invited successfully. Invitation email sent to ${email}`,
+      message: `User invited successfully. Setup email sent to ${email}`,
       data: userResponse
     });
   } catch (error) {

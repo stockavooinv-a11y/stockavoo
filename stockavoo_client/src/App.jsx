@@ -3,6 +3,7 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
+import SetupAccount from './pages/auth/SetupAccount';
 import VerifyEmail from './pages/auth/VerifyEmail';
 import VerificationWaiting from './pages/auth/VerificationWaiting';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -20,6 +21,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/setup-account/:token" element={<SetupAccount />} />
       <Route path="/verify-email/:token" element={<VerifyEmail />} />
       <Route
         path="/verify-email-waiting"

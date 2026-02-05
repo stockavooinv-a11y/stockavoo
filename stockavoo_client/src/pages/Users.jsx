@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users as UsersIcon, UserPlus, Search, MoreVertical, Edit, Trash2, AlertCircle } from 'lucide-react';
+import { Users as UsersIcon, UserPlus, Search, MoreVertical, Edit, Trash2, AlertCircle, Filter } from 'lucide-react';
 import { useGetAllUsersQuery, useDeleteUserMutation } from '../store/api/userApi';
 import { getRoleLabel, getRoleColor } from '../utils/rbac';
 import RBACGuard from '../components/RBACGuard';
@@ -16,22 +16,32 @@ import { useToast } from '../contexts/ToastContext';
 const Users = () => {
   const toast = useToast();
   const [searchTerm, setSearchTerm] = useState('');
+  const [roleFilter, setRoleFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showActionMenu, setShowActionMenu] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   // Fetch all users
   const { data, isLoading, error } = useGetAllUsersQuery();
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-  // Filter users based on search
+  // Filter users based on search, role, and status
   const filteredUsers = data?.data?.filter((user) => {
     const search = searchTerm.toLowerCase();
-    return (
+    const matchesSearch =
       user.fullName.toLowerCase().includes(search) ||
       user.email.toLowerCase().includes(search) ||
-      getRoleLabel(user.role).toLowerCase().includes(search)
-    );
+      getRoleLabel(user.role).toLowerCase().includes(search);
+
+    const matchesRole = roleFilter === 'all' || user.role === roleFilter;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'verified' && user.isVerified) ||
+      (statusFilter === 'pending' && !user.isVerified);
+
+    return matchesSearch && matchesRole && matchesStatus;
   }) || [];
 
   const handleDeleteUser = async (userId) => {
@@ -185,16 +195,60 @@ const Users = () => {
             </RBACGuard>
           </div>
 
-          {/* Search Bar */}
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
-            />
+          {/* Search and Filters */}
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Bar */}
+            <div className="relative flex-1 min-w-[200px] max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+              />
+            </div>
+
+            {/* Role Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <select
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value)}
+                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer appearance-none"
+              >
+                <option value="all">All Roles</option>
+                <option value="owner">Store Owner</option>
+                <option value="manager">Manager</option>
+                <option value="clerk">Clerk</option>
+                <option value="accountant">Accountant</option>
+                <option value="warehouse_manager">Warehouse Manager</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Status Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer appearance-none"
+              >
+                <option value="all">All Status</option>
+                <option value="verified">Verified</option>
+                <option value="pending">Pending</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -208,8 +262,12 @@ const Users = () => {
           data={filteredUsers.map((user) => ({ ...user, id: user._id }))}
           isLoading={isLoading}
           error={error}
-          emptyMessage={searchTerm ? 'No users found matching your search' : 'No users yet. Invite your first team member to get started!'}
+          emptyMessage={searchTerm || roleFilter !== 'all' || statusFilter !== 'all' ? 'No users found matching your filters' : 'No users yet. Invite your first team member to get started!'}
           emptyIcon={UsersIcon}
+          selectable={true}
+          onSelectionChange={setSelectedRows}
+          exportable={true}
+          exportFilename="users"
         />
 
         {/* Stats Footer */}

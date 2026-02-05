@@ -6,7 +6,8 @@ import {
   resendVerification,
   getMe,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  setupPassword
 } from '../controllers/authController.js';
 import { protect } from '../middleware/auth.js';
 import {
@@ -115,6 +116,19 @@ router.post('/forgot-password', validateForgotPassword, forgotPassword);
  * }
  */
 router.post('/reset-password/:token', validateResetPassword, resetPassword);
+
+/**
+ * @route   POST /api/auth/setup-password/:token
+ * @desc    Setup password for invited user (first-time login)
+ * @access  Public
+ *
+ * Expected request body:
+ * {
+ *   "password": "NewPassword123!",
+ *   "confirmPassword": "NewPassword123!"
+ * }
+ */
+router.post('/setup-password/:token', validateResetPassword, setupPassword);
 
 // ============ PROTECTED ROUTES (authentication required) ============
 

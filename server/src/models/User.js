@@ -53,7 +53,10 @@ const userSchema = new mongoose.Schema(
     // Password - will be hashed before saving
     password: {
       type: String,
-      required: [true, 'Please provide a password'],
+      required: function() {
+        // Password is required for owners, but optional for invited users (they set it via token)
+        return this.role === 'owner' && !this.passwordSetupToken;
+      },
       minlength: [8, 'Password must be at least 8 characters long'],
       select: false // This field won't be returned in queries by default (security)
     },
@@ -104,6 +107,14 @@ const userSchema = new mongoose.Schema(
     // Password reset functionality (for "Forgot Password")
     passwordResetToken: String,
     passwordResetExpires: Date,
+
+    // Password setup token (for first-time invited users)
+    passwordSetupToken: String,
+    passwordSetupExpires: Date,
+    isFirstLogin: {
+      type: Boolean,
+      default: true // Will be set to false after first password setup
+    },
 
     // Profile picture URL (user upload)
     profilePicture: String,
@@ -217,6 +228,24 @@ userSchema.methods.createPasswordResetToken = function() {
   this.passwordResetExpires = Date.now() + 60 * 60 * 1000;
 
   return resetToken;
+};
+
+/**
+ * Generate password setup token (for invited users)
+ * @returns {String} - The setup token (unhashed)
+ */
+userSchema.methods.createPasswordSetupToken = function() {
+  const setupToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordSetupToken = crypto
+    .createHash('sha256')
+    .update(setupToken)
+    .digest('hex');
+
+  // Token expires in 7 days (longer than reset, since it's an invitation)
+  this.passwordSetupExpires = Date.now() + 7 * 24 * 60 * 60 * 1000;
+
+  return setupToken;
 };
 
 // Create and export the User model

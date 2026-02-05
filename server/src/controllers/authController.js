@@ -421,3 +421,87 @@ export const resetPassword = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Setup password for invited user (first-time login)
+ * @route   POST /api/auth/setup-password/:token
+ * @access  Public
+ */
+export const setupPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // Validate password
+    if (!password || password.length < 8) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Password must be at least 8 characters long'
+      });
+    }
+
+    // Hash the token to compare with database
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    // Find user with valid setup token
+    const user = await User.findOne({
+      passwordSetupToken: hashedToken,
+      passwordSetupExpires: { $gt: Date.now() } // Token must not be expired
+    });
+
+    // Check if token is valid
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'This setup link has expired or is invalid. Please contact your administrator.'
+      });
+    }
+
+    // Set password and mark as verified
+    user.password = password; // Will be hashed by mongoose middleware
+    user.passwordSetupToken = undefined;
+    user.passwordSetupExpires = undefined;
+    user.isFirstLogin = false;
+    user.isVerified = true; // Auto-verify on password setup
+    await user.save();
+
+    // Generate JWT token for immediate login
+    const jwtToken = generateToken(user._id);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Account setup successful! You can now login.',
+      data: {
+        user: {
+          id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          role: user.role,
+          isVerified: user.isVerified
+        },
+        token: jwtToken
+      }
+    });
+
+  } catch (error) {
+    console.error('Setup password error:', error);
+
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        status: 'error',
+        message: 'Validation failed',
+        errors
+      });
+    }
+
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong. Please try again later.'
+    });
+  }
+};
+
