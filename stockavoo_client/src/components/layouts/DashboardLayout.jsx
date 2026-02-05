@@ -13,7 +13,8 @@ import {
   Settings,
   LogOut,
   Menu,
-  X
+  X,
+  Store
 } from 'lucide-react';
 
 /**
@@ -47,6 +48,7 @@ const DashboardLayout = ({ children }) => {
   // Navigation items with RBAC
   const allNavigation = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard', roles: null },
+    { name: 'Stores', icon: Store, href: '/stores', roles: ['owner'] },
     { name: 'Products', icon: Package, href: '/products', roles: null },
     { name: 'Sales', icon: ShoppingCart, href: '/sales', roles: null },
     { name: 'Users', icon: Users, href: '/users', roles: ['owner', 'manager'] },

@@ -125,6 +125,14 @@ export const createUser = async (req, res) => {
       });
     }
 
+    // Prevent creating users with 'owner' role
+    if (role === 'owner') {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot invite users with owner role. Owners can only be created through registration.'
+      });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {

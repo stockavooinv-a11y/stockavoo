@@ -20,7 +20,8 @@ This task list is organized based on **user roles** (personas) to align developm
 - [x] ~~User registration and login~~
 - [x] ~~Email verification~~
 - [x] ~~Password reset functionality~~
-- [ ] User profile management
+- [x] ~~User profile management~~
+- [x] ~~Token-based user invitation flow~~
 - [ ] Business profile setup and configuration
 - [ ] Onboarding wizard for new store setup
 
@@ -33,12 +34,15 @@ This task list is organized based on **user roles** (personas) to align developm
 - [ ] Manage store-level configurations
 
 ### **User & Role Management**
-- [ ] Add/remove staff users (1–15 based on subscription plan)
-- [ ] Assign roles to users (Store Manager, Accountant, Sales Clerk, etc.)
-- [ ] Configure role-based permissions (RBAC)
+- [x] ~~Add/remove staff users (1–15 based on subscription plan)~~
+- [x] ~~Assign roles to users (Store Manager, Accountant, Sales Clerk, etc.)~~
+- [x] ~~Configure role-based permissions (RBAC)~~
 - [ ] View user activity logs
-- [ ] Deactivate/activate user accounts
-- [ ] Invite users to the system
+- [x] ~~Deactivate/activate user accounts~~
+- [x] ~~Invite users to the system~~
+- [x] ~~View users list with filters (role, status)~~
+- [x] ~~Edit user information~~
+- [x] ~~Owner role excluded from invitations~~
 
 ### **Dashboard & Analytics**
 - [x] ~~View main dashboard with key metrics~~
@@ -340,11 +344,14 @@ This section covers technical tasks required to support all user roles above.
 - [x] ~~Create stat cards component~~
 - [x] ~~Create quick actions component~~
 - [x] ~~Implement responsive mobile sidebar~~
-- [ ] Implement user profile management page
+- [x] ~~Implement user profile management page~~
+- [x] ~~Create Modal component with glassmorphism~~
+- [x] ~~Create Table component with sorting, filtering, export~~
+- [x] ~~Implement RBAC UI for user/role management~~
+- [x] ~~Create user list/management page~~
+- [x] ~~Create add/edit user modal~~
+- [x] ~~Implement change password functionality~~
 - [ ] Implement user settings page
-- [ ] Implement RBAC UI for user/role management
-- [ ] Create user list/management page
-- [ ] Create add/edit user modal
 - [ ] Create store management pages
 - [ ] Create product management pages
 - [ ] Create sales order (POS) interface
@@ -380,13 +387,18 @@ This section covers technical tasks required to support all user roles above.
 - [x] ~~Implement reset password endpoint~~
 - [x] ~~Implement email verification endpoint~~
 - [x] ~~Implement resend verification email~~
-- [x] ~~Set up email service (Nodemailer)~~
+- [x] ~~Set up email service (Nodemailer/Brevo)~~
+- [x] ~~Implement token-based account setup endpoint~~
+- [x] ~~Implement change password endpoint~~
 - [ ] Implement refresh token mechanism
-- [ ] Implement RBAC middleware
+- [x] ~~Implement RBAC middleware~~
 - [ ] Create audit log system
 
 #### **Core API Endpoints**
-- [ ] User management CRUD endpoints
+- [x] ~~User management CRUD endpoints~~
+- [x] ~~User invitation endpoint with email setup link~~
+- [x] ~~Update own profile endpoint~~
+- [x] ~~Change password endpoint~~
 - [ ] Store management CRUD endpoints
 - [ ] Product & inventory CRUD endpoints
 - [ ] Sales order CRUD endpoints
@@ -580,28 +592,42 @@ This section covers technical tasks required to support all user roles above.
 ## 📅 CURRENT STATUS SUMMARY
 
 ### ✅ Completed
-**User Roles Supported:** Partial support for Retail Store Owner (authentication only)
+**User Roles Supported:** Retail Store Owner (Full authentication, profile, user management)
 - Frontend: React + Tailwind CSS setup
-- Authentication pages (Login, Register, Password Reset, Email Verification)
+- Authentication pages (Login, Register, Password Reset, Email Verification, Setup Account)
 - Email verification workflow
-- Protected routes
+- Token-based user invitation flow
+- Protected routes with RBAC
 - Redux Toolkit + RTK Query setup
 - Basic dashboard layout with sidebar
-- Backend: Authentication endpoints (registration, login, email verification)
+- User profile management page
+- User list/management page with filters
+- Add/Edit user modal
+- Change password functionality
+- Reusable components (Table, Modal, Button, Input)
+- Backend: Full authentication system (registration, login, verification, password reset/change)
+- Backend: User management CRUD with RBAC
+- Backend: Email service with Brevo SMTP
 
 ### 🔄 In Progress
-- **Task List Reorganization** - Reorganized by user roles (COMPLETED ✅)
+- None currently
 
 ### ⏳ Next Up - Recommended Development Order by User Role
 
 #### **IMMEDIATE NEXT TASK (Choose One):**
-**Option A: User & Role Management (RECOMMENDED)**
-- Enables Store Owners to add users and assign roles
-- Foundation for RBAC and multi-user workflows
-- **Impact:** Unlocks Store Manager, Sales Clerk, Accountant personas
-- **Files to create:** User management UI, role assignment, RBAC middleware
+**Option A: Store Management (RECOMMENDED)**
+- Create and configure stores
+- Foundation for inventory and multi-store workflows
+- **Impact:** Unlocks Product Management and Store-specific operations
+- **Files to create:** Store management UI, store CRUD endpoints, store model
 
-**Option B: Database Migration (TECHNICAL DEBT)**
+**Option B: Product Management**
+- Add, edit, delete products
+- Manage product variants (size, color, etc.)
+- **Impact:** Core feature needed before sales processing
+- **Files to create:** Product management UI, product CRUD endpoints, product model
+
+**Option C: Database Migration (TECHNICAL DEBT)**
 - Migrate MongoDB → PostgreSQL (PRD requirement)
 - **Impact:** Avoids future migration complexity
 - **Effort:** High (schema redesign, data migration, testing)
@@ -610,8 +636,8 @@ This section covers technical tasks required to support all user roles above.
 
 #### **Phase 1: Core Retail Store Owner & Store Manager Features**
 1. ✅ ~~Authentication & email verification~~
-2. **👉 NEXT: User & Role Management** - Store Owner adds users with roles (RECOMMENDED)
-3. **Store Management** - Single store creation and configuration
+2. ✅ ~~User & Role Management - Store Owner adds users with roles~~
+3. **👉 NEXT: Store Management** - Single store creation and configuration (RECOMMENDED)
 4. **Product Management** - Store Manager can add/edit/delete products with variants
 
 #### **Phase 2: Sales Clerk & Store Manager Operations**

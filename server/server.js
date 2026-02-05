@@ -8,6 +8,7 @@ import { verifyEmailConfig } from "./src/config/email.js";
 // Import routes
 import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
+import storeRoutes from "./src/routes/storeRoutes.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -58,6 +59,11 @@ app.use("/api/auth", authRoutes);
 // All routes in userRoutes will be prefixed with /api/users
 // Example: GET /api/users, POST /api/users, GET /api/users/me
 app.use("/api/users", userRoutes);
+
+// Mount store management routes
+// All routes in storeRoutes will be prefixed with /api/stores
+// Example: GET /api/stores, POST /api/stores, GET /api/stores/:id
+app.use("/api/stores", storeRoutes);
 
 // Test route to understand request/response
 app.get("/api/test", (req, res) => {

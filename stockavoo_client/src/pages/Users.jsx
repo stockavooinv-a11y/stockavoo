@@ -218,7 +218,6 @@ const Users = () => {
                 className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer appearance-none"
               >
                 <option value="all">All Roles</option>
-                <option value="owner">Store Owner</option>
                 <option value="manager">Manager</option>
                 <option value="clerk">Clerk</option>
                 <option value="accountant">Accountant</option>

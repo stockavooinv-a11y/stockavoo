@@ -147,14 +147,17 @@ export const canAccessFeature = (user, feature) => {
 
 /**
  * Get all roles as options for select dropdown
+ * Excludes 'owner' role as owners cannot be invited
  * @returns {Array} - Array of {value, label, description}
  */
 export const getRoleOptions = () => {
-  return Object.values(ROLES).map((role) => ({
-    value: role,
-    label: ROLE_LABELS[role],
-    description: ROLE_DESCRIPTIONS[role],
-  }));
+  return Object.values(ROLES)
+    .filter((role) => role !== ROLES.OWNER) // Exclude owner role from invitation
+    .map((role) => ({
+      value: role,
+      label: ROLE_LABELS[role],
+      description: ROLE_DESCRIPTIONS[role],
+    }));
 };
 
 /**

@@ -8,6 +8,7 @@ import VerifyEmail from './pages/auth/VerifyEmail';
 import VerificationWaiting from './pages/auth/VerificationWaiting';
 import Dashboard from './pages/dashboard/Dashboard';
 import Users from './pages/Users';
+import Stores from './pages/Stores';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import RBACGuard from './components/RBACGuard';
@@ -38,6 +39,18 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <Dashboard />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/stores"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <RBACGuard roles={['owner']}>
+                <Stores />
+              </RBACGuard>
             </DashboardLayout>
           </ProtectedRoute>
         }
