@@ -56,10 +56,10 @@ const Toast = ({
     },
     info: {
       icon: Info,
-      iconBg: 'bg-blue-500',
+      iconBg: 'bg-[#7C3E8C]',
       iconColor: 'text-white',
-      borderColor: 'border-blue-200',
-      accentColor: 'bg-blue-500'
+      borderColor: 'border-[#7C3E8C]/20',
+      accentColor: 'bg-[#7C3E8C]'
     }
   };
 

@@ -137,12 +137,12 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
     >
       <div className="p-6 space-y-6">
         {/* Instructions */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+        <div className="bg-[#7C3E8C]/5 border-l-4 border-[#7C3E8C] p-4 rounded-lg">
           <div className="flex items-start gap-3">
-            <FileText className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+            <FileText className="w-5 h-5 text-[#7C3E8C] mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-semibold text-blue-900 mb-1">How to upload stores</h4>
-              <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+              <h4 className="font-semibold text-slate-900 mb-1">How to upload stores</h4>
+              <ol className="text-sm text-slate-700 space-y-1 list-decimal list-inside">
                 <li>Download the CSV template below</li>
                 <li>Fill in your store information in the template</li>
                 <li>Upload the completed CSV file</li>
@@ -178,8 +178,8 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-lg file:border-0
                 file:text-sm file:font-semibold
-                file:bg-purple-50 file:text-purple-700
-                hover:file:bg-purple-100
+                file:bg-[#7C3E8C]/10 file:text-[#7C3E8C]
+                hover:file:bg-[#7C3E8C]/20
                 cursor-pointer"
             />
           </div>

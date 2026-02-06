@@ -89,7 +89,7 @@ const Modal = ({
                 <div className="flex items-start gap-4 flex-1">
                   {/* Icon */}
                   {icon && (
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#4A1D66] to-[#7C3E8C] rounded-xl flex items-center justify-center shadow-lg shadow-[#7C3E8C]/30">
                       <div className="text-white">
                         {icon}
                       </div>

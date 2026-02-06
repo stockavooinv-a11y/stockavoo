@@ -5,7 +5,7 @@ import {
   useUpdateStoreMutation,
   useBulkCreateStoresMutation,
 } from '../store/api/storeApi';
-import { Modal, Button } from './common';
+import { Modal, Button, Input } from './common';
 import { useToast } from '../contexts/ToastContext';
 
 /**
@@ -250,7 +250,7 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
       disabled={isEditMode}
       className={`flex items-center gap-2 px-4 py-2.5 font-semibold text-sm rounded-lg transition-all ${
         activeTab === id
-          ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30'
+          ? 'bg-[#7C3E8C] text-white shadow-lg shadow-[#7C3E8C]/30'
           : isEditMode
           ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
           : 'bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer'
@@ -285,61 +285,48 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
             {/* Basic Information */}
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-purple-600" />
+                <Building2 className="w-4 h-4 text-[#7C3E8C]" />
                 Basic Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Store Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Main Branch"
-                    required
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Phone Number <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    placeholder="+234 XXX XXX XXXX"
-                    required
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                  />
-                </div>
+                <Input
+                  label={<>Store Name <span className="text-red-500">*</span></>}
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Main Branch"
+                  required
+                />
+                <Input
+                  label={<>Phone Number <span className="text-red-500">*</span></>}
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  placeholder="+234 XXX XXX XXXX"
+                  required
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <Input
+                  label="Email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="store@example.com"
+                />
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="store@example.com"
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Currency
                   </label>
                   <select
                     name="currency"
                     value={formData.currency}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all cursor-pointer"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3E8C] transition-colors cursor-pointer"
                   >
                     <option value="NGN">NGN (₦)</option>
                     <option value="USD">USD ($)</option>
@@ -350,7 +337,7 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
               </div>
 
               <div className="mt-4">
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description
                 </label>
                 <textarea
@@ -359,7 +346,7 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
                   onChange={handleChange}
                   placeholder="Brief description of this store location"
                   rows={2}
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3E8C] transition-colors resize-none"
                 />
               </div>
             </div>
@@ -367,74 +354,53 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
             {/* Location */}
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-purple-600" />
+                <MapPin className="w-4 h-4 text-[#7C3E8C]" />
                 Location
               </h3>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Street Address
-                  </label>
-                  <input
+                <Input
+                  label="Street Address"
+                  type="text"
+                  name="address.street"
+                  value={formData.address.street}
+                  onChange={handleChange}
+                  placeholder="123 Main Street"
+                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    label="City"
                     type="text"
-                    name="address.street"
-                    value={formData.address.street}
+                    name="address.city"
+                    value={formData.address.city}
                     onChange={handleChange}
-                    placeholder="123 Main Street"
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    placeholder="Lagos"
+                  />
+                  <Input
+                    label="State"
+                    type="text"
+                    name="address.state"
+                    value={formData.address.state}
+                    onChange={handleChange}
+                    placeholder="Lagos"
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">City</label>
-                    <input
-                      type="text"
-                      name="address.city"
-                      value={formData.address.city}
-                      onChange={handleChange}
-                      placeholder="Lagos"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">State</label>
-                    <input
-                      type="text"
-                      name="address.state"
-                      value={formData.address.state}
-                      onChange={handleChange}
-                      placeholder="Lagos"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      name="address.country"
-                      value={formData.address.country}
-                      onChange={handleChange}
-                      placeholder="Nigeria"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      Postal Code
-                    </label>
-                    <input
-                      type="text"
-                      name="address.postalCode"
-                      value={formData.address.postalCode}
-                      onChange={handleChange}
-                      placeholder="100001"
-                      className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    />
-                  </div>
+                  <Input
+                    label="Country"
+                    type="text"
+                    name="address.country"
+                    value={formData.address.country}
+                    onChange={handleChange}
+                    placeholder="Nigeria"
+                  />
+                  <Input
+                    label="Postal Code"
+                    type="text"
+                    name="address.postalCode"
+                    value={formData.address.postalCode}
+                    onChange={handleChange}
+                    placeholder="100001"
+                  />
                 </div>
               </div>
             </div>
@@ -442,22 +408,17 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
             {/* Business Settings */}
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-3">Business Settings</h3>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Tax Rate (%)
-                </label>
-                <input
-                  type="number"
-                  name="taxRate"
-                  value={formData.taxRate}
-                  onChange={handleChange}
-                  placeholder="0"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                  className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                />
-              </div>
+              <Input
+                label="Tax Rate (%)"
+                type="number"
+                name="taxRate"
+                value={formData.taxRate}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
+                max="100"
+                step="0.01"
+              />
             </div>
 
             {/* Actions */}
@@ -481,12 +442,12 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
         {activeTab === 'bulk' && (
           <div className="space-y-6">
             {/* Instructions */}
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+            <div className="bg-[#7C3E8C]/5 border-l-4 border-[#7C3E8C] p-4 rounded-lg">
               <div className="flex items-start gap-3">
-                <FileText className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+                <FileText className="w-5 h-5 text-[#7C3E8C] mt-0.5 shrink-0" />
                 <div>
-                  <h4 className="font-semibold text-blue-900 mb-1">How to upload stores</h4>
-                  <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+                  <h4 className="font-semibold text-slate-900 mb-1">How to upload stores</h4>
+                  <ol className="text-sm text-slate-700 space-y-1 list-decimal list-inside">
                     <li>Download the CSV template below</li>
                     <li>Fill in your store information in the template</li>
                     <li>Upload the completed CSV file</li>
@@ -518,8 +479,8 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-lg file:border-0
                     file:text-sm file:font-semibold
-                    file:bg-purple-50 file:text-purple-700
-                    hover:file:bg-purple-100
+                    file:bg-[#7C3E8C]/10 file:text-[#7C3E8C]
+                    hover:file:bg-[#7C3E8C]/20
                     cursor-pointer"
                 />
               </div>

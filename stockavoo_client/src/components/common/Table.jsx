@@ -98,7 +98,7 @@ const Table = ({
     return (
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/50 overflow-hidden">
         <div className="p-12 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7C3E8C] mx-auto"></div>
           <p className="text-slate-600 mt-4 font-medium">Loading...</p>
         </div>
       </div>
@@ -170,7 +170,7 @@ const Table = ({
                     type="checkbox"
                     checked={isAllSelected}
                     onChange={handleSelectAll}
-                    className="w-4 h-4 text-purple-600 border-slate-300 rounded focus:ring-purple-500 cursor-pointer"
+                    className="w-4 h-4 text-[#7C3E8C] border-slate-300 rounded focus:ring-[#7C3E8C] cursor-pointer"
                   />
                 </th>
               )}
@@ -193,7 +193,7 @@ const Table = ({
                 onClick={() => !selectable && onRowClick?.(row)}
                 className={`hover:bg-white/80 transition-colors ${
                   onRowClick && !selectable ? 'cursor-pointer' : ''
-                } ${selectedRows.includes(row.id) ? 'bg-purple-50/50' : ''}`}
+                } ${selectedRows.includes(row.id) ? 'bg-[#7C3E8C]/5' : ''}`}
               >
                 {selectable && (
                   <td className="px-6 py-4 w-12">
@@ -202,7 +202,7 @@ const Table = ({
                       checked={selectedRows.includes(row.id)}
                       onChange={() => handleRowSelect(row.id)}
                       onClick={(e) => e.stopPropagation()}
-                      className="w-4 h-4 text-purple-600 border-slate-300 rounded focus:ring-purple-500 cursor-pointer"
+                      className="w-4 h-4 text-[#7C3E8C] border-slate-300 rounded focus:ring-[#7C3E8C] cursor-pointer"
                     />
                   </td>
                 )}
@@ -251,7 +251,7 @@ const Table = ({
                       onClick={() => setCurrentPage(page)}
                       className={`min-w-[2rem] px-3 py-1 text-sm rounded-lg transition-all cursor-pointer ${
                         currentPage === page
-                          ? 'bg-purple-600 text-white font-medium'
+                          ? 'bg-[#7C3E8C] text-white font-medium'
                           : 'text-slate-600 hover:bg-slate-100'
                       }`}
                     >

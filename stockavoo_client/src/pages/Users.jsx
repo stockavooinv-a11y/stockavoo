@@ -63,7 +63,7 @@ const Users = () => {
       render: (user) => (
         <div className="flex items-center gap-3">
           <div className="shrink-0 h-10 w-10">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#4A1D66] to-[#7C3E8C] flex items-center justify-center shadow-lg shadow-[#7C3E8C]/30">
               <span className="text-white font-semibold text-sm">
                 {user.fullName.charAt(0).toUpperCase()}
               </span>
@@ -144,7 +144,7 @@ const Users = () => {
                   }}
                   className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 cursor-pointer transition-colors"
                 >
-                  <Edit className="w-4 h-4 text-blue-600" />
+                  <Edit className="w-4 h-4 text-[#7C3E8C]" />
                   <span className="font-medium">Edit User</span>
                 </button>
                 <RBACGuard resource="users" action="delete">
@@ -177,7 +177,7 @@ const Users = () => {
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <UsersIcon className="w-7 h-7 text-purple-600" />
+                <UsersIcon className="w-7 h-7 text-[#7C3E8C]" />
                 User Management
               </h1>
               <p className="text-sm text-slate-600 mt-1">Manage team members and their roles</p>
@@ -205,7 +205,7 @@ const Users = () => {
                 placeholder="Search users..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-[#7C3E8C] focus:ring-2 focus:ring-[#7C3E8C]/20 transition-all"
               />
             </div>
 
@@ -215,7 +215,7 @@ const Users = () => {
               <select
                 value={roleFilter}
                 onChange={(e) => setRoleFilter(e.target.value)}
-                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer appearance-none"
+                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-[#7C3E8C] focus:ring-2 focus:ring-[#7C3E8C]/20 transition-all cursor-pointer appearance-none"
               >
                 <option value="all">All Roles</option>
                 <option value="manager">Manager</option>
@@ -236,7 +236,7 @@ const Users = () => {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all cursor-pointer appearance-none"
+                className="pl-9 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-[#7C3E8C] focus:ring-2 focus:ring-[#7C3E8C]/20 transition-all cursor-pointer appearance-none"
               >
                 <option value="all">All Status</option>
                 <option value="verified">Verified</option>
@@ -274,7 +274,7 @@ const Users = () => {
           <div className="bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/50 p-6 hover:shadow-xl hover:shadow-slate-300/50 transition-all duration-300">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium text-slate-600">Total Users</p>
-              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-[#4A1D66] to-[#7C3E8C] shadow-lg">
                 <UsersIcon className="w-5 h-5 text-white" />
               </div>
             </div>

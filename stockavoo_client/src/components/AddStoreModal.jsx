@@ -233,7 +233,7 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 resize-none"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 resize-none"
               placeholder="Brief description of this store location..."
             />
           </div>
@@ -327,7 +327,7 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
                 name="currency"
                 value={formData.currency}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 cursor-pointer"
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 cursor-pointer"
               >
                 <option value="NGN">NGN - Nigerian Naira</option>
                 <option value="USD">USD - US Dollar</option>

@@ -194,7 +194,7 @@ const AddUserModal = ({ isOpen, onClose, user = null }) => {
               className={`w-full px-4 py-3 border-2 rounded-xl transition-all bg-slate-50/50 focus:bg-white ${
                 errors.role
                   ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-500/10'
-                  : 'border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10'
+                  : 'border-slate-200 focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10'
               }`}
             >
               <option value="">Select a role...</option>
@@ -212,8 +212,8 @@ const AddUserModal = ({ isOpen, onClose, user = null }) => {
 
             {/* Role Description */}
             {formData.role && ROLE_DESCRIPTIONS[formData.role] && (
-              <div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg">
-                <p className="text-sm text-blue-900">
+              <div className="mt-3 p-4 bg-gradient-to-r from-[#7C3E8C]/5 to-[#7C3E8C]/10 border-l-4 border-[#7C3E8C] rounded-lg">
+                <p className="text-sm text-[#7C3E8C]">
                   <strong className="font-semibold">📋 Permissions:</strong> {ROLE_DESCRIPTIONS[formData.role]}
                 </p>
               </div>

@@ -7,20 +7,61 @@ import {
   AlertTriangle,
   DollarSign,
   BarChart3,
-  FileText
+  FileText,
+  Shield,
+  UserCheck,
+  Users
 } from 'lucide-react';
 
 const Dashboard = () => {
   const user = useSelector(selectCurrentUser);
+
+  // Role configuration
+  const getRoleConfig = (role) => {
+    const configs = {
+      owner: {
+        icon: Shield,
+        label: 'Owner',
+        bgColor: 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700]',
+        textColor: 'text-[#2A1142]'
+      },
+      manager: {
+        icon: UserCheck,
+        label: 'Manager',
+        bgColor: 'bg-gradient-to-r from-[#4A1D66] to-[#7C3E8C]',
+        textColor: 'text-white'
+      },
+      staff: {
+        icon: Users,
+        label: 'Staff',
+        bgColor: 'bg-gradient-to-r from-slate-500 to-slate-600',
+        textColor: 'text-white'
+      }
+    };
+    return configs[role] || configs.staff;
+  };
+
+  const roleConfig = getRoleConfig(user?.role);
+  const RoleIcon = roleConfig.icon;
 
   return (
     <>
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-lg border-b border-slate-200">
         <div className="px-4 sm:px-6 lg:px-8 py-4">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-            <p className="text-sm text-slate-600">Welcome back, {user?.fullName?.split(' ')[0]}</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+              <p className="text-sm text-slate-600">Welcome back, {user?.fullName?.split(' ')[0]}</p>
+            </div>
+
+            {/* Role Badge */}
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${roleConfig.bgColor} shadow-lg`}>
+              <RoleIcon className={`w-4 h-4 ${roleConfig.textColor}`} />
+              <span className={`text-sm font-semibold ${roleConfig.textColor}`}>
+                {roleConfig.label}
+              </span>
+            </div>
           </div>
         </div>
       </header>
@@ -35,7 +76,7 @@ const Dashboard = () => {
             change="+0%"
             trend="up"
             icon={Package}
-            color="from-blue-500 to-blue-600"
+            color="from-[#4A1D66] to-[#7C3E8C]"
           />
           <StatCard
             title="Low Stock Items"
@@ -59,7 +100,7 @@ const Dashboard = () => {
             change="0%"
             trend="neutral"
             icon={BarChart3}
-            color="from-purple-500 to-purple-600"
+            color="from-[#D4AF37] to-[#FFD700]"
           />
         </div>
 

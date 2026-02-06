@@ -119,7 +119,7 @@ const Profile = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7C3E8C]"></div>
       </div>
     );
   }
@@ -253,16 +253,16 @@ const Profile = () => {
               </div>
 
               {/* Security Card */}
-              <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-xl shadow-lg p-6 relative overflow-hidden">
+              <div className="bg-gradient-to-br from-[#2A1142] via-[#4A1D66] to-[#2A1142] rounded-xl shadow-lg p-6 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-purple-400 rounded-full blur-3xl"></div>
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-[#7C3E8C] rounded-full blur-3xl"></div>
                 </div>
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 border border-white/20">
-                    <Lock className="w-6 h-6 text-purple-300" />
+                    <Lock className="w-6 h-6 text-[#D4AF37]" />
                   </div>
                   <h3 className="text-lg font-bold mb-2 text-white">Security Settings</h3>
-                  <p className="text-purple-200 text-sm mb-4">
+                  <p className="text-white/80 text-sm mb-4">
                     Keep your account secure by updating your password regularly
                   </p>
                   <Button
