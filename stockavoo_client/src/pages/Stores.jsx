@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Store as StoreIcon, Plus, Search, MoreVertical, Edit, Trash2, MapPin, Phone, DollarSign } from 'lucide-react';
+import { Store as StoreIcon, Plus, MoreVertical, Edit, Trash2, MapPin, Phone, DollarSign } from 'lucide-react';
 import { useGetAllStoresQuery, useDeleteStoreMutation } from '../store/api/storeApi';
 import RBACGuard from '../components/RBACGuard';
 import StoreModal from '../components/StoreModal';
 import StoreDetailModal from '../components/StoreDetailModal';
-import { Button } from '../components/common';
+import { Button, SearchInput } from '../components/common';
 import { useToast } from '../contexts/ToastContext';
 
 /**
@@ -80,16 +80,12 @@ const Stores = () => {
 
         {/* Compact Search */}
         <div className="mt-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search stores..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-[#7C3E8C] focus:ring-1 focus:ring-[#7C3E8C]/20 transition-all"
-            />
-          </div>
+          <SearchInput
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search stores..."
+            fullWidth
+          />
         </div>
       </div>
 
@@ -148,7 +144,7 @@ const Stores = () => {
                       e.stopPropagation();
                       setShowActionMenu(showActionMenu === store._id ? null : store._id);
                     }}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                    className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all cursor-pointer"
                   >
                     <MoreVertical className="w-4 h-4" />
                   </button>
@@ -162,7 +158,7 @@ const Stores = () => {
                           setShowStoreModal(true);
                           setShowActionMenu(null);
                         }}
-                        className="w-full text-left px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors cursor-pointer"
                       >
                         <Edit className="w-3 h-3 text-[#7C3E8C]" />
                         Edit
@@ -174,7 +170,7 @@ const Stores = () => {
                           setShowActionMenu(null);
                         }}
                         disabled={isDeleting}
-                        className="w-full text-left px-3 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors border-t border-slate-100"
+                        className="w-full text-left px-3 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors border-t border-slate-100 cursor-pointer"
                       >
                         <Trash2 className="w-3 h-3" />
                         Delete

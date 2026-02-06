@@ -25,7 +25,6 @@ const StoreModal = ({ isOpen, onClose, store = null }) => {
     email: '',
     phoneNumber: '',
     description: '',
-    taxRate: 0,
     currency: 'NGN',
     address: {
       street: '',
@@ -50,10 +49,10 @@ const StoreModal = ({ isOpen, onClose, store = null }) => {
   const isSingleLoading = isCreating || isUpdating;
 
   // CSV template
-  const csvTemplate = `name,phoneNumber,email,description,taxRate,currency,street,city,state,country,postalCode
-Main Branch,+234 XXX XXX XXXX,main@example.com,Our primary store location,7.5,NGN,123 Main Street,Lagos,Lagos,Nigeria,100001
-Downtown Store,+234 XXX XXX XXXX,downtown@example.com,City center location,7.5,NGN,456 Market Road,Abuja,FCT,Nigeria,900001
-Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,789 West Avenue,Port Harcourt,Rivers,Nigeria,500001`;
+  const csvTemplate = `name,phoneNumber,email,description,currency,street,city,state,country,postalCode
+Main Branch,+234 XXX XXX XXXX,main@example.com,Our primary store location,NGN,123 Main Street,Lagos,Lagos,Nigeria,100001
+Downtown Store,+234 XXX XXX XXXX,downtown@example.com,City center location,NGN,456 Market Road,Abuja,FCT,Nigeria,900001
+Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,NGN,789 West Avenue,Port Harcourt,Rivers,Nigeria,500001`;
 
   // Load store data for editing
   useEffect(() => {
@@ -63,7 +62,6 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
         email: store.email || '',
         phoneNumber: store.phoneNumber || '',
         description: store.description || '',
-        taxRate: store.taxRate || 0,
         currency: store.currency || 'NGN',
         address: {
           street: store.address?.street || '',
@@ -85,7 +83,6 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
         email: '',
         phoneNumber: '',
         description: '',
-        taxRate: 0,
         currency: 'NGN',
         address: {
           street: '',
@@ -117,7 +114,7 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: name === 'taxRate' ? parseFloat(value) || 0 : value,
+        [name]: value,
       }));
     }
   };
@@ -176,11 +173,6 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
       headers.forEach((header, index) => {
         store[header] = values[index] || '';
       });
-
-      // Convert taxRate to number
-      if (store.taxRate) {
-        store.taxRate = parseFloat(store.taxRate);
-      }
 
       stores.push(store);
     }
@@ -403,22 +395,6 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,7.5,NGN,7
                   />
                 </div>
               </div>
-            </div>
-
-            {/* Business Settings */}
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 mb-3">Business Settings</h3>
-              <Input
-                label="Tax Rate (%)"
-                type="number"
-                name="taxRate"
-                value={formData.taxRate}
-                onChange={handleChange}
-                placeholder="0"
-                min="0"
-                max="100"
-                step="0.01"
-              />
             </div>
 
             {/* Actions */}

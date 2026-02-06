@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Users as UsersIcon, UserPlus, Search, MoreVertical, Edit, Trash2, AlertCircle, Filter } from 'lucide-react';
+import { Users as UsersIcon, UserPlus, MoreVertical, Edit, Trash2, AlertCircle, Filter } from 'lucide-react';
 import { useGetAllUsersQuery, useDeleteUserMutation } from '../store/api/userApi';
 import { getRoleLabel, getRoleColor } from '../utils/rbac';
 import RBACGuard from '../components/RBACGuard';
 import AddUserModal from '../components/AddUserModal';
-import { Button, Table } from '../components/common';
+import { Button, Table, SearchInput } from '../components/common';
 import { useToast } from '../contexts/ToastContext';
 
 /**
@@ -198,16 +198,11 @@ const Users = () => {
           {/* Search and Filters */}
           <div className="flex items-center gap-3 flex-wrap">
             {/* Search Bar */}
-            <div className="relative flex-1 min-w-[200px] max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:border-[#7C3E8C] focus:ring-2 focus:ring-[#7C3E8C]/20 transition-all"
-              />
-            </div>
+            <SearchInput
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search users..."
+            />
 
             {/* Role Filter */}
             <div className="relative">

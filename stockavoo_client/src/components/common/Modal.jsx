@@ -69,7 +69,7 @@ const Modal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-900/50"
+        className={`absolute inset-0 bg-slate-900/50 ${closeOnOverlayClick ? 'cursor-pointer' : ''}`}
         onClick={closeOnOverlayClick ? onClose : undefined}
         aria-hidden="true"
       ></div>
@@ -115,7 +115,7 @@ const Modal = ({
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all"
+                    className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all cursor-pointer"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />

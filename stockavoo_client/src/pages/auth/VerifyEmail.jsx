@@ -94,7 +94,7 @@ const VerifyEmail = () => {
             <div className="space-y-2">
               <Link
                 to="/login"
-                className="block w-full px-4 py-2 bg-[#7C3E8C] text-white rounded-md hover:opacity-90 transition-opacity"
+                className="block w-full px-4 py-2 bg-[#7C3E8C] text-white rounded-md hover:opacity-90 transition-opacity cursor-pointer"
               >
                 Go to Login
               </Link>

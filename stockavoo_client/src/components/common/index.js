@@ -5,3 +5,4 @@ export { default as ConfirmationModal } from './ConfirmationModal';
 export { default as VerificationBanner } from './VerificationBanner';
 export { default as Toast } from './Toast';
 export { default as Table } from './Table';
+export { default as SearchInput } from './SearchInput';

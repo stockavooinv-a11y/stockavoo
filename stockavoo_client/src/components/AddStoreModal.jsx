@@ -20,7 +20,6 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
     email: '',
     phoneNumber: '',
     description: '',
-    taxRate: 0,
     currency: 'NGN',
     address: {
       street: '',
@@ -47,7 +46,6 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
         email: store.email || '',
         phoneNumber: store.phoneNumber || '',
         description: store.description || '',
-        taxRate: store.taxRate || 0,
         currency: store.currency || 'NGN',
         address: {
           street: store.address?.street || '',
@@ -106,10 +104,6 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
       newErrors.email = 'Email is invalid';
     }
 
-    if (formData.taxRate < 0 || formData.taxRate > 100) {
-      newErrors.taxRate = 'Tax rate must be between 0 and 100';
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -150,7 +144,6 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
       email: '',
       phoneNumber: '',
       description: '',
-      taxRate: 0,
       currency: 'NGN',
       address: {
         street: '',
@@ -302,39 +295,23 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-slate-900 border-b pb-2">Business Settings</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Tax Rate */}
-            <Input
-              label="Tax Rate (%)"
-              name="taxRate"
-              type="number"
-              value={formData.taxRate}
+          {/* Currency */}
+          <div>
+            <label htmlFor="currency" className="block text-sm font-semibold text-slate-700 mb-2">
+              Currency
+            </label>
+            <select
+              id="currency"
+              name="currency"
+              value={formData.currency}
               onChange={handleChange}
-              error={errors.taxRate}
-              placeholder="0"
-              min="0"
-              max="100"
-              step="0.1"
-            />
-
-            {/* Currency */}
-            <div>
-              <label htmlFor="currency" className="block text-sm font-semibold text-slate-700 mb-2">
-                Currency
-              </label>
-              <select
-                id="currency"
-                name="currency"
-                value={formData.currency}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 cursor-pointer"
-              >
-                <option value="NGN">NGN - Nigerian Naira</option>
-                <option value="USD">USD - US Dollar</option>
-                <option value="GBP">GBP - British Pound</option>
-                <option value="EUR">EUR - Euro</option>
-              </select>
-            </div>
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 cursor-pointer"
+            >
+              <option value="NGN">NGN - Nigerian Naira</option>
+              <option value="USD">USD - US Dollar</option>
+              <option value="GBP">GBP - British Pound</option>
+              <option value="EUR">EUR - Euro</option>
+            </select>
           </div>
         </div>
 

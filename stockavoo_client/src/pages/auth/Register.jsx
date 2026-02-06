@@ -194,7 +194,7 @@ const Register = () => {
             <h2 className="text-3xl font-bold text-slate-900 mb-2">Create your account</h2>
             <p className="text-slate-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors">
+              <Link to="/login" className="text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors cursor-pointer">
                 Sign in
               </Link>
             </p>

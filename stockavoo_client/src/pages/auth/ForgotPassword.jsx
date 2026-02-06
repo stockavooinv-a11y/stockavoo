@@ -57,7 +57,7 @@ const ForgotPassword = () => {
           </p>
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors"
+            className="inline-flex items-center gap-2 text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             Return to Login
@@ -196,7 +196,7 @@ const ForgotPassword = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/login"
-                className="text-sm text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors inline-flex items-center gap-2"
+                className="text-sm text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors inline-flex items-center gap-2 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Login

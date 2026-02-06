@@ -63,13 +63,6 @@ const storeSchema = new mongoose.Schema(
     },
 
     // Business Settings
-    taxRate: {
-      type: Number,
-      default: 0,
-      min: [0, 'Tax rate cannot be negative'],
-      max: [100, 'Tax rate cannot exceed 100%'],
-    },
-
     currency: {
       type: String,
       default: 'NGN',

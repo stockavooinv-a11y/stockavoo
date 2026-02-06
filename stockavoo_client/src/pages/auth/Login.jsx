@@ -181,7 +181,7 @@ const Login = () => {
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors"
+                className="text-[#7C3E8C] font-semibold hover:text-[#5B2C7A] transition-colors cursor-pointer"
               >
                 Sign up
               </Link>
@@ -241,7 +241,7 @@ const Login = () => {
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-[#7C3E8C] font-medium hover:text-[#5B2C7A] transition-colors"
+                  className="text-sm text-[#7C3E8C] font-medium hover:text-[#5B2C7A] transition-colors cursor-pointer"
                 >
                   Forgot password?
                 </Link>
