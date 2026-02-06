@@ -3,6 +3,7 @@ import { Store } from 'lucide-react';
 import { useCreateStoreMutation, useUpdateStoreMutation } from '../store/api/storeApi';
 import { Modal, Input, Button } from './common';
 import { useToast } from '../contexts/ToastContext';
+import { fetchCountries, fetchStates } from '../services/locationService';
 
 /**
  * ADD/EDIT STORE MODAL
@@ -32,11 +33,58 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
 
   const [errors, setErrors] = useState({});
 
+  // Location data state
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(false);
+  const [isLoadingStates, setIsLoadingStates] = useState(false);
+
   // RTK Query mutations
   const [createStore, { isLoading: isCreating }] = useCreateStoreMutation();
   const [updateStore, { isLoading: isUpdating }] = useUpdateStoreMutation();
 
   const isLoading = isCreating || isUpdating;
+
+  // Load countries on modal open
+  useEffect(() => {
+    if (isOpen) {
+      const loadCountries = async () => {
+        setIsLoadingCountries(true);
+        try {
+          const data = await fetchCountries();
+          setCountries(data);
+        } catch (error) {
+          toast.error('Failed to load countries');
+        } finally {
+          setIsLoadingCountries(false);
+        }
+      };
+      loadCountries();
+    }
+  }, [isOpen, toast]);
+
+  // Load states when country changes
+  useEffect(() => {
+    const loadStates = async () => {
+      if (formData.address.country && countries.length > 0) {
+        setIsLoadingStates(true);
+        try {
+          // Find country code
+          const country = countries.find(c => c.name === formData.address.country);
+          const countryCode = country?.code || formData.address.country;
+
+          const data = await fetchStates(countryCode);
+          setStates(data);
+        } catch (error) {
+          toast.error('Failed to load states');
+          setStates([]);
+        } finally {
+          setIsLoadingStates(false);
+        }
+      }
+    };
+    loadStates();
+  }, [formData.address.country, countries, toast]);
 
   // Populate form when editing
   useEffect(() => {
@@ -258,26 +306,54 @@ const AddStoreModal = ({ isOpen, onClose, store = null }) => {
             />
 
             {/* State */}
-            <Input
-              label="State/Province"
-              name="address.state"
-              type="text"
-              value={formData.address.state}
-              onChange={handleChange}
-              placeholder="Lagos"
-            />
+            <div>
+              <label htmlFor="address.state" className="block text-sm font-semibold text-slate-700 mb-2">
+                State/Province
+              </label>
+              <select
+                id="address.state"
+                name="address.state"
+                value={formData.address.state}
+                onChange={handleChange}
+                disabled={isLoadingStates || states.length === 0}
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
+              >
+                <option value="">
+                  {isLoadingStates ? 'Loading states...' : states.length === 0 ? 'No states available' : 'Select state'}
+                </option>
+                {states.map((state) => (
+                  <option key={state.code} value={state.name}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Country */}
-            <Input
-              label="Country"
-              name="address.country"
-              type="text"
-              value={formData.address.country}
-              onChange={handleChange}
-              placeholder="Nigeria"
-            />
+            <div>
+              <label htmlFor="address.country" className="block text-sm font-semibold text-slate-700 mb-2">
+                Country
+              </label>
+              <select
+                id="address.country"
+                name="address.country"
+                value={formData.address.country}
+                onChange={handleChange}
+                disabled={isLoadingCountries}
+                className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl transition-all bg-slate-50/50 focus:bg-white focus:border-[#7C3E8C] focus:ring-4 focus:ring-[#7C3E8C]/10 cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
+              >
+                <option value="">
+                  {isLoadingCountries ? 'Loading countries...' : 'Select country'}
+                </option>
+                {countries.map((country) => (
+                  <option key={country.code} value={country.name}>
+                    {country.flag} {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Postal Code */}
             <Input

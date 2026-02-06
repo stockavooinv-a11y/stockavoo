@@ -7,6 +7,7 @@ import {
 } from '../store/api/storeApi';
 import { Modal, Button, Input } from './common';
 import { useToast } from '../contexts/ToastContext';
+import { fetchCountries, fetchStates } from '../services/locationService';
 
 /**
  * UNIFIED STORE MODAL
@@ -35,6 +36,12 @@ const StoreModal = ({ isOpen, onClose, store = null }) => {
     },
   });
 
+  // Location data state
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(false);
+  const [isLoadingStates, setIsLoadingStates] = useState(false);
+
   // Bulk upload state
   const [file, setFile] = useState(null);
   const [parsedData, setParsedData] = useState([]);
@@ -53,6 +60,47 @@ const StoreModal = ({ isOpen, onClose, store = null }) => {
 Main Branch,+234 XXX XXX XXXX,main@example.com,Our primary store location,NGN,123 Main Street,Lagos,Lagos,Nigeria,100001
 Downtown Store,+234 XXX XXX XXXX,downtown@example.com,City center location,NGN,456 Market Road,Abuja,FCT,Nigeria,900001
 Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,NGN,789 West Avenue,Port Harcourt,Rivers,Nigeria,500001`;
+
+  // Load countries on modal open
+  useEffect(() => {
+    if (isOpen) {
+      const loadCountries = async () => {
+        setIsLoadingCountries(true);
+        try {
+          const data = await fetchCountries();
+          setCountries(data);
+        } catch (error) {
+          toast.error('Failed to load countries');
+        } finally {
+          setIsLoadingCountries(false);
+        }
+      };
+      loadCountries();
+    }
+  }, [isOpen, toast]);
+
+  // Load states when country changes
+  useEffect(() => {
+    const loadStates = async () => {
+      if (formData.address.country && countries.length > 0) {
+        setIsLoadingStates(true);
+        try {
+          // Find country code
+          const country = countries.find(c => c.name === formData.address.country);
+          const countryCode = country?.code || formData.address.country;
+
+          const data = await fetchStates(countryCode);
+          setStates(data);
+        } catch (error) {
+          toast.error('Failed to load states');
+          setStates([]);
+        } finally {
+          setIsLoadingStates(false);
+        }
+      }
+    };
+    loadStates();
+  }, [formData.address.country, countries, toast]);
 
   // Load store data for editing
   useEffect(() => {
@@ -367,24 +415,50 @@ Westside Branch,+234 XXX XXX XXXX,westside@example.com,West area store,NGN,789 W
                     onChange={handleChange}
                     placeholder="Lagos"
                   />
-                  <Input
-                    label="State"
-                    type="text"
-                    name="address.state"
-                    value={formData.address.state}
-                    onChange={handleChange}
-                    placeholder="Lagos"
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      State
+                    </label>
+                    <select
+                      name="address.state"
+                      value={formData.address.state}
+                      onChange={handleChange}
+                      disabled={isLoadingStates || states.length === 0}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3E8C] transition-colors cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="">
+                        {isLoadingStates ? 'Loading states...' : states.length === 0 ? 'No states available' : 'Select state'}
+                      </option>
+                      {states.map((state) => (
+                        <option key={state.code} value={state.name}>
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input
-                    label="Country"
-                    type="text"
-                    name="address.country"
-                    value={formData.address.country}
-                    onChange={handleChange}
-                    placeholder="Nigeria"
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Country
+                    </label>
+                    <select
+                      name="address.country"
+                      value={formData.address.country}
+                      onChange={handleChange}
+                      disabled={isLoadingCountries}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#7C3E8C] transition-colors cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    >
+                      <option value="">
+                        {isLoadingCountries ? 'Loading countries...' : 'Select country'}
+                      </option>
+                      {countries.map((country) => (
+                        <option key={country.code} value={country.name}>
+                          {country.flag} {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <Input
                     label="Postal Code"
                     type="text"
